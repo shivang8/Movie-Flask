@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+	<form action="/dashboard" method="post">
+		{% if error == 1 %}
+			<font color='red'>Invalid Credentials</font>
+		{% elif error == 2 %}
+			<font color='red'>DB Error</font>
+		{% endif %}
+		<table>
+			<tr>
+				<td>USERNAME</td>
+				<td><input type="text" name="username" required></td>
+			</tr>
+			<tr>
+				<td>PASSWORD</td>
+				<td><input type="password" name="password" required></td>
+			</tr>
+		</table>
+		<br><br>
+		<button>Login</button>
+	</form>
+{% endblock %}

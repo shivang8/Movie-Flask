@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Sign-Up
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+	<form action="/task2" method="post">
+		{% if error == 1 %}
+			<font color='red'>USERNAME ALREADY EXIST</font>
+		{% elif error == 2 %}
+			<font color='red'>DB Error</font>
+		{% elif error == 3 %}
+			<font color='red'>Invalid Credentials</font>
+		{% endif %}
+		<table>
+			<tr>
+				<td>USERNAME</td>
+				<td><input type="text" name="username" required></td>
+			</tr>
+			<tr>
+				<td>PASSWORD</td>
+				<td><input type="password" name="password" required></td>
+			</tr>
+			<tr>
+				<td>Genre</td>
+				<td>
+					<select name="option">
+						<option value="Action">Action</option>
+						<option value="Adventure">Adventure</option>
+						<option value="Animation">Animation</option>
+						<option value="Children's">Children's</option>
+						<option value="Comedy">Comedy</option>
+						<option value="Crime">Crime</option>
+						<option value="Documentary">Documentary</option>
+						<option value="Drama">Drama</option>
+						<option value="Fantasy">Fantasy</option>
+						<option value="Film-Noir">Film-Noir</option>
+						<option value="Horror">Horror</option>
+						<option value="Musical">Musical</option>
+						<option value="Mystery">Mystery</option>
+						<option value="Romance">Romance</option>
+						<option value="Sci-Fi">Sci-Fi</option>
+						<option value="Thriller">Thriller</option>
+						<option value="War">War</option>
+						<option value="Western">Western</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<button>Sign Me Up</button>
+	</form>
+{% endblock %}
