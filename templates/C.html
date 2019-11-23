@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+C
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+	<h3>CREATE</h3>
+	<form action="/output" method="post">
+		<table>
+			<tr>
+				<td>userId</td>
+				<td><input type="text" name="userId" required></td>
+			</tr>
+			<tr>
+				<td>movieId</td>
+				<td><input type="text" name="movieId" required></td>
+			</tr>
+			<tr>
+				<td>rating</td>
+				<td><input type="text" name="rating" required></td>
+			</tr>
+			<tr>
+				<td>timestamp</td>
+				<td><input type="text" name="timestamp" required></td>
+			</tr>
+		</table>
+		<br><br>
+		<button>Feed to DB</button>
+	</form>
+{% endblock %}

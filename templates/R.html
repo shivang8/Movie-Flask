@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+R
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+	<h3>READ</h3>
+	<form action="/output" method="post">
+		<table>
+			<tr>
+				<td>Query On</td>
+				<td>
+					<select name="option" required>
+						<option value="userId">userId</option>
+						<option value="movieId">movieId</option>
+						<option value="rating">rating</option>
+						<option value="timestamp">timestamp</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Value</td>
+				<td><input type="text" name="entity" required></td>
+			</tr>
+		</table>
+		<br><br>
+		<button>Get Results</button>
+	</form>
+{% endblock %}

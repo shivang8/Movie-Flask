@@ -15,6 +15,22 @@ class Users(db.Model):
 	def __repr__(self):
 		return "Users('{}','{}','{}')".format(self.username,self.password,self.genre)
 
+@app.route('/c')
+def crud_c():
+	return render_template('C.html')
+
+@app.route('/r')
+def crud_r():
+	return render_template('R.html')
+
+@app.route('/u')
+def crud_u():
+	return render_template('U.html')
+
+@app.route('/d')
+def crud_d():
+	return render_template('D.html')
+
 @app.route('/dashboard', methods=['POST','GET'])
 def dashboard():
 	if request.method == 'POST':
@@ -23,8 +39,16 @@ def dashboard():
 		password = request.form['password']
 		print("username = ",username,"\t password = ",password)
 		result = Users.query.filter_by(username=username).first()
-		if result.password == password :
-			return render_template('dashboard.html')
+		try:
+			result.username
+			flag = True
+		except:
+			flag = False
+		if flag:
+			if result.password == password :
+				return render_template('dashboard.html')
+			else:
+				return render_template('login.html',error=1)
 		else:
 			return render_template('login.html',error=1)
 	else:
