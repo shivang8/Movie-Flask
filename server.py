@@ -41,8 +41,6 @@ def output():
 		elif body['type'] == 'search':
 			flag = 1
 			exe = {}
-			exe['size'] = request.form['size']
-			#query = {}
 			boo = {}
 			must = []
 			v1 = request.form['userId']
@@ -79,7 +77,6 @@ def output():
 			body['exec'] = must
 		elif body['type'] == 'update':
 			flag = 2
-			index = request.form.get("index")
 			user = request.form.get("user")
 			movie = request.form.get("movie")
 			rating = request.form.get("rating")
@@ -104,7 +101,6 @@ def output():
 			body = data
 		elif body['type'] == 'delete':
 			flag = 4
-			index = request.form.get("index")
 			user = request.form.get("user")
 			movie = request.form.get("movie")
 			rating = request.form.get("rating")
