@@ -69,9 +69,10 @@ def output():
 				t['timestamp'] = v4
 				temp['match'] = t
 				must.append(temp)
-			boo['bool'] = must
-			exe['query'] = boo
-			body['exec'] = exe
+			#boo['bool'] = must
+			#exe['query'] = boo
+			#body['exec'] = exe
+			body['exec'] = must
 		elif body['type'] == 'update':
 			index = request.form.get("index")
 			user = request.form.get("user")
