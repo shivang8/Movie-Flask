@@ -1,9 +1,12 @@
 import os
+import json
+from datetime import datetime
 from flask import Flask, request, redirect, url_for, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -14,6 +17,126 @@ class Users(db.Model):
 	
 	def __repr__(self):
 		return "Users('{}','{}','{}')".format(self.username,self.password,self.genre)
+
+@app.route('/output', methods=['POST','GET'])
+def output():
+	body = {}
+	if request.method == 'POST':
+		body['type'] = request.form['type']
+		if body['type'] == 'create':
+			body['index'] = 'my-index'
+			exe = {}
+			exe['userId'] = request.form['userId']
+			exe['movieId'] = request.form['movieId']
+			exe['rating'] = request.form['rating']
+			exe['timestamp'] = request.form['timestamp']
+			body['exec'] = exe
+		elif body['type'] == 'search':
+			exe = {}
+			exe['size'] = request.form['size']
+			#query = {}
+			boo = {}
+			must = []
+			v1 = request.form['userId']
+			v2 = request.form['movieId']
+			v3 = request.form['rating']
+			v4 = request.form['timestamp']
+			if v1 != '':
+				temp = {}
+				t = {}
+				t['userId'] = v1
+				temp['match'] = t
+				must.append(temp)
+			if v2 != '':
+				temp = {}
+				t = {}
+				t['movieId'] = v2
+				temp['match'] = t
+				must.append(temp)
+			if v3 != '':
+				temp = {}
+				t = {}
+				t['rating'] = v3
+				temp['match'] = t
+				must.append(temp)
+			if v4 != '':
+				temp = {}
+				t = {}
+				t['timestamp'] = v4
+				temp['match'] = t
+				must.append(temp)
+			boo['bool'] = must
+			exe['query'] = boo
+			body['exec'] = exe
+		elif body['type'] == 'update':
+			index = request.form.get("index")
+			user = request.form.get("user")
+			movie = request.form.get("movie")
+			rating = request.form.get("rating")
+			now = datetime.now()
+			current_time = now.strftime("%H:%M:%S")
+			data = {
+				'type': 'update',
+				'index': index,
+				'exec':{
+					'userId':user,
+					'movieId':movie,
+					'rating':rating,
+					'timestamp':current_time
+			   		}
+				}
+			body = data
+		elif body['type'] == 'delete':
+			index = request.form.get("index")
+			user = request.form.get("user")
+			movie = request.form.get("movie")
+			rating = request.form.get("rating")
+			now = datetime.now()
+			current_time = now.strftime("%H:%M:%S")
+			data = {
+				'type': 'update',
+				'index': index,
+				'exec': {
+					'userId': user,
+					'movieId': movie,
+					'rating': rating,
+					'timestamp': current_time
+					}
+				}
+			body = data
+	json_data = json.dumps(body)
+	print("\n\n",json_data,"\n\n")
+	return render_template('output.html')
+	
+# body={'type':'delete',
+# 	  'index': 'my-index',
+# 	  'exec': {
+# 	  'query': {
+# 	  	'match': {
+# 	  	'userId': '890'
+# 	  	}
+# 	  	# 'movieId': '300',
+# 	  	# 'rating' :'1.5'	,
+# 	  	# 'timestamp' : '1093143913'
+# 	  }
+# 	  }
+# 	  }
+
+# body= {'type': 'update',
+# 	   'index': 'my-index',
+# 	   'exec': {
+# 	     "script": {
+# 	     	"inline": "ctx._source.rating='9.5'; ctx._source.timestamp='1113188335'"
+# 	        # "rating": "5.5'",
+# 	        # "timestamp": "1113188330"
+# 	     },
+# 	     "query": {
+# 	        "match": {
+# 	            "userId": "890"
+# 	        }
+# 	     }
+#      }
+# }
 
 @app.route('/c')
 def crud_c():

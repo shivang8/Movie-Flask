@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Update
+{% endblock %}
+
+{% block body %}
+<form action="/output" method="post">
+	<h2> Update your movie rating here </h2><br><br>
+		<table>
+			<tr>
+				<td>Index</td>
+				<td><input type="text" name="index"></td>
+			</tr>
+			<tr>
+				<td>User ID</td>
+				<td><input type="text" name="user"></td>
+			</tr>
+			<tr>
+				<td>Movie ID</td>
+				<td><input type="text" name="movie"></td>
+			</tr>
+			<tr>
+				<td>Rating</td>
+				<td><input type="text" name="rating"></td>
+			</tr>
+		</table>
+		<input type="hidden" name="type" value="update">
+		<button>UPDATE</button>
+</form>
+{% endblock %}

@@ -10,16 +10,15 @@ Home
 
 {% block body %}
 	<h3>Task 1</h3>
-	<form action="/output" method="post">
-		<table>
-			<tr>
-				<td><a href="/c"><button>Create - ADD</button></a></td>
-				<td><a href="/r"><button>Read - GET</button></a></td>
-			</tr>
-			<tr>
-				<td><a href="/u"><button>Update - </button></a></td>
-				<td><a href="/d"><button>Drop - Delete</button></a></td>
-			</tr>
-		</table>
-	</form>
+	<table>
+		<tr>
+			<td><a href="/c"><button>Create - ADD</button></a></td>
+			<td><a href="/r"><button>Read - GET</button></a></td>
+		</tr>
+		<tr>
+			<td><a href="/u"><button>Update - </button></a></td>
+			<td><a href="/d"><button>Drop - Delete</button></a></td>
+		</tr>
+	</table>
+	
 {% endblock %}

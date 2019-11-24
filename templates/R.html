@@ -13,22 +13,28 @@ R
 	<form action="/output" method="post">
 		<table>
 			<tr>
-				<td>Query On</td>
-				<td>
-					<select name="option" required>
-						<option value="userId">userId</option>
-						<option value="movieId">movieId</option>
-						<option value="rating">rating</option>
-						<option value="timestamp">timestamp</option>
-					</select>
-				</td>
+				<td>NUMBER OF ENTRIES TO FETCH</td>
+				<td><input type="number" name="size" required></td>
 			</tr>
 			<tr>
-				<td>Value</td>
-				<td><input type="text" name="entity" required></td>
+				<td>userId</td>
+				<td><input type="text" name="userId"></td>
+			</tr>
+			<tr>
+				<td>movieId</td>
+				<td><input type="text" name="movieId"></td>
+			</tr>
+			<tr>
+				<td>rating</td>
+				<td><input type="text" name="rating"></td>
+			</tr>
+			<tr>
+				<td>timestamp</td>
+				<td><input type="text" name="timestamp"></td>
 			</tr>
 		</table>
+		<input type="hidden" name="type" value="search">
 		<br><br>
-		<button>Get Results</button>
+		<button>Query on DB</button>
 	</form>
 {% endblock %}
