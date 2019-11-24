@@ -1,5 +1,6 @@
 import os
 import json
+import requests
 from datetime import datetime
 from flask import Flask, request, redirect, url_for, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -27,7 +28,9 @@ def output():
 	body = {}
 	if request.method == 'POST':
 		body['type'] = request.form['type']
+		flag = 0
 		if body['type'] == 'create':
+			flag = 3
 			body['index'] = 'my-index'
 			exe = {}
 			exe['userId'] = request.form['userId']
@@ -36,6 +39,7 @@ def output():
 			exe['timestamp'] = request.form['timestamp']
 			body['exec'] = exe
 		elif body['type'] == 'search':
+			flag = 1
 			exe = {}
 			exe['size'] = request.form['size']
 			#query = {}
@@ -74,6 +78,7 @@ def output():
 			#body['exec'] = exe
 			body['exec'] = must
 		elif body['type'] == 'update':
+			flag = 2
 			index = request.form.get("index")
 			user = request.form.get("user")
 			movie = request.form.get("movie")
@@ -82,16 +87,23 @@ def output():
 			current_time = now.strftime("%H:%M:%S")
 			data = {
 				'type': 'update',
-				'index': index,
+				'index': 'my-index',
 				'exec':{
-					'userId':user,
-					'movieId':movie,
-					'rating':rating,
-					'timestamp':current_time
-			   		}
+					'match':
+						[
+							{'match': {'userId': user}},
+							{'match': {'movieId': movie}}
+						],
+					'change':
+						{
+							'rating':rating,
+							'timestamp':current_time
+						}
+					}
 				}
 			body = data
 		elif body['type'] == 'delete':
+			flag = 4
 			index = request.form.get("index")
 			user = request.form.get("user")
 			movie = request.form.get("movie")
@@ -111,6 +123,15 @@ def output():
 			body = data
 	json_data = json.dumps(body)
 	print("\n\n",json_data,"\n\n")
+	r=requests.get("http://localhost:8080",json=body)
+	if flag == 1:
+		json_data=r.json()
+		data = []
+		for line in json_data:
+			data.append(line['_source'])
+		return render_template('output.html',flag=1, data=data)
+	elif flag == 2:
+		return render_template('output.html',flag=2, data=data)
 	return render_template('output.html')
 
 @app.route('/c')

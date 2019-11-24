@@ -5,10 +5,51 @@ C
 {% endblock %}
 
 {% block head %}
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
 {% endblock %}
 
 {% block body %}
 	<h3>OUTPUT</h3>
-	
+	{% if flag == 1 %}
+		<table> 
+			<tr>
+				<td><b>movieId</b></td>
+				<td><b>rating</b></td>
+				<td><b>timestamp</b></td>
+				<td><b>userId</b></td>
+			</tr>
+			{% if data|length > 0 %}
+				{% for line in data %}
+					<tr>
+						<td>{{line['movieId']}}</td>
+						<td>{{line['rating']}}</td>
+						<td>{{line['timestamp']}}</td>
+						<td>{{line['userId']}}</td>
+					</tr>
+				{% endfor %}
+		</table>
+		<br><br>
+		{% else %}
+			<font color='red'>DB Empty</font> <br><br>	
+		{% endif %}
+	{% elif flag == 2 %}
+
+	{% endif %}
+	<a href="/home"><button>Home</button></a>
 {% endblock %}
