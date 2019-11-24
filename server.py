@@ -13,10 +13,14 @@ db = SQLAlchemy(app)
 class Users(db.Model):
 	username = db.Column(db.String(20), primary_key=True)
 	password = db.Column(db.String(20), nullable=False)
-	genre = db.Column(db.String(30), nullable=False, default=0)
+	genre1 = db.Column(db.String(30), nullable=False)
+	genre2 = db.Column(db.String(30), nullable=False)
+	genre3 = db.Column(db.String(30), nullable=False)
+	genre4 = db.Column(db.String(30), nullable=False)
+	genre5 = db.Column(db.String(30), nullable=False)
 	
 	def __repr__(self):
-		return "Users('{}','{}','{}')".format(self.username,self.password,self.genre)
+		return "Users('{}','{}','{}','{}','{}','{}','{}')".format(self.username,self.password,self.genre1,self.genre2,self.genre3,self.genre4,self.genre5)
 
 @app.route('/output', methods=['POST','GET'])
 def output():
@@ -107,36 +111,6 @@ def output():
 	json_data = json.dumps(body)
 	print("\n\n",json_data,"\n\n")
 	return render_template('output.html')
-	
-# body={'type':'delete',
-# 	  'index': 'my-index',
-# 	  'exec': {
-# 	  'query': {
-# 	  	'match': {
-# 	  	'userId': '890'
-# 	  	}
-# 	  	# 'movieId': '300',
-# 	  	# 'rating' :'1.5'	,
-# 	  	# 'timestamp' : '1093143913'
-# 	  }
-# 	  }
-# 	  }
-
-# body= {'type': 'update',
-# 	   'index': 'my-index',
-# 	   'exec': {
-# 	     "script": {
-# 	     	"inline": "ctx._source.rating='9.5'; ctx._source.timestamp='1113188335'"
-# 	        # "rating": "5.5'",
-# 	        # "timestamp": "1113188330"
-# 	     },
-# 	     "query": {
-# 	        "match": {
-# 	            "userId": "890"
-# 	        }
-# 	     }
-#      }
-# }
 
 @app.route('/c')
 def crud_c():
@@ -195,8 +169,13 @@ def t2():
 		username = request.form['username']
 		username = username.lower()
 		password = request.form['password']
-		genre = request.form['option']
-		print("username = ",username,"\t password = ",password,"\t genre = ",genre)
+		genre1 = request.form['option1']
+		genre2 = request.form['option2']
+		genre3 = request.form['option3']
+		genre4 = request.form['option4']
+		genre5 = request.form['option5']
+		
+		print("username = ",username,"\t password = ",password,"\t genre1 = ",genre1,"\t genre2 = ",genre2,"\t genre3 = ",genre3,"\t genre4 = ",genre4,"\t genre5 = ",genre5)
 		temp = Users.query.filter_by(username=username).first()
 		try:
 			temp.username
@@ -206,7 +185,7 @@ def t2():
 		if flag:
 			return render_template('register.html',error=1)
 		else:
-			new_entry = Users(username=username, password=password, genre=genre)
+			new_entry = Users(username=username, password=password, genre1=genre1, genre2=genre2, genre3=genre3, genre4=genre4, genre5=genre5)
 			db.session.add(new_entry)
 			db.session.commit()
 			return render_template('t2.html',error=1)
