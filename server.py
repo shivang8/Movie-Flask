@@ -165,6 +165,12 @@ def dashboard():
 			flag = False
 		if flag:
 			if result.password == password :
+				genre = []
+				genre.append(result.genre1)
+				genre.append(result.genre2)
+				genre.append(result.genre3)
+				genre.append(result.genre4)
+				genre.append(result.genre5)
 				return render_template('dashboard.html')
 			else:
 				return render_template('login.html',error=1)
